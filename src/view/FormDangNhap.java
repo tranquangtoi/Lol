@@ -158,6 +158,7 @@ public class FormDangNhap extends javax.swing.JFrame {
         Global gl = new Global();
         
         gl.setUser(user);
+        gl.setPass(pass);
         LocalDateTime time = LocalDateTime.now();
         gl.setGioVao(time);
         

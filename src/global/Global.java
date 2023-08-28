@@ -17,7 +17,17 @@ import java.util.Date;
 public class Global {
 
     public static String user = "";
+    
+    public static String pass;
 
+    public static String getPass() {
+        return pass;
+    }
+
+    public static void setPass(String pass) {
+        Global.pass = pass;
+    }
+    
     public static LocalDateTime gioVao;
 
     public static double tienBanGiaoCa;

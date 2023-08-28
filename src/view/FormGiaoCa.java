@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import service.ServiceGiaoCa;
+import service.ServiceTaiKhoan;
 import view.FormNhanVien;
 
 /**
@@ -28,6 +29,12 @@ public class FormGiaoCa extends javax.swing.JPanel {
 //    private Global gl = new Global();
     private ServiceGiaoCa service = new ServiceGiaoCa();
     LocalDateTime date2 = LocalDateTime.now();
+    ServiceTaiKhoan qltk = new ServiceTaiKhoan();
+    LocalTime startTime = LocalTime.of(16, 10);
+    LocalTime endTime = LocalTime.of(22, 30);
+
+    LocalDateTime currentDateTime = LocalDateTime.now();
+    LocalTime currentTime = currentDateTime.toLocalTime();
 
     /**
      * Creates new form FormGiaoCA
@@ -39,9 +46,16 @@ public class FormGiaoCa extends javax.swing.JPanel {
         txtTienCoc.setEnabled(false);
         txtTongTien.setEnabled(false);
         txtTongDoanhThu.setEnabled(false);
+        txtTongTienCacCa.setEnabled(false);
 
         txtTongTienCacCa.setText(Global.getTienBanGiaoCa() + "");
+        if (qltk.DangNhap(Global.getUser(), Global.getPass()).equals("QL")) {
+            btnBanGiaoCa.setEnabled(false);
+        }
 
+        if (currentTime.isAfter(startTime) && currentTime.isBefore(endTime)) {
+            txtNguoiNhan.setEnabled(false);
+        }
     }
 
     public void showChotCa() {
@@ -51,6 +65,8 @@ public class FormGiaoCa extends javax.swing.JPanel {
             txtTongTien.setText(tongTien.getTongTien() + "");
             txtTienCoc.setText(tiecCoc.getTienCoc() + "");
             txtTongDoanhThu.setText(tongTien.getTongTien() + tiecCoc.getTienCoc() + "");
+            GiaoCa gc = service.getlistGC();
+            txtTongTienCacCa.setText(gc.getTienTrongCa() + "");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -58,24 +74,16 @@ public class FormGiaoCa extends javax.swing.JPanel {
 
     public boolean kiemTraDieuKien() {
 
-//        LocalTime startTime = LocalTime.of(16, 10);
-//        LocalTime endTime = LocalTime.of(22, 30);
-//
-//        LocalDateTime currentDateTime = LocalDateTime.now();
-//        LocalTime currentTime = currentDateTime.toLocalTime();
-//
-//        if (currentTime.isAfter(startTime) || currentTime.isBefore(endTime)) {
-//            System.out.println("Thời gian hiện tại nằm trong khoảng thời gian đã đặt.");
-//        } else {
-//            System.out.println("Thời gian hiện tại không nằm trong khoảng thời gian đã đặt.");
-//        }
-
         if (Uhelper.checkEmpty(txtNguoiGiao, "Không được để trống người giao")) {
             return false;
         }
-        if (Uhelper.checkEmpty(txtNguoiNhan, "Không được để trống người nhận")) {
-            return false;
+
+        if (!(currentTime.isAfter(startTime) && currentTime.isBefore(endTime))) {
+            if (Uhelper.checkEmpty(txtNguoiNhan, "Không được để trống người nhận")) {
+                return false;
+            }
         }
+
         if (Uhelper.checkEmpty(txtThucTeGiao, "Không được để trống thực tế giao")) {
             return false;
         }
@@ -105,10 +113,10 @@ public class FormGiaoCa extends javax.swing.JPanel {
             return false;
         }
 
-        if (Double.parseDouble(txtTongDoanhThu.getText()) != Double.parseDouble(txtThucTeGiao.getText())) {
-            JOptionPane.showMessageDialog(null, "Tiền bàn giao không khớp với tiền doanh thu trong ca vừa rồi ");
-            return false;
-        }
+//        if (Double.parseDouble(txtTongTienCacCa.getText()) != Double.parseDouble(txtThucTeGiao.getText())) {
+//            JOptionPane.showMessageDialog(null, "Tiền bàn giao không đủ");
+//            return false;
+//        }
         //////////////////////////////
 
         if (service.getListTenTK(txtNguoiNhan.getText()) == null) {
@@ -305,6 +313,7 @@ public class FormGiaoCa extends javax.swing.JPanel {
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
         jLabel16.setText("Tổng tiền các ca");
 
+        txtTongTienCacCa.setBackground(new java.awt.Color(255, 153, 153));
         txtTongTienCacCa.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
 
         javax.swing.GroupLayout panelSeth2Layout = new javax.swing.GroupLayout(panelSeth2);
@@ -366,6 +375,11 @@ public class FormGiaoCa extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnChotCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChotCaActionPerformed
+        if (qltk.DangNhap(Global.getUser(), Global.getPass()).equals("QL")) {
+            GiaoCa gc = service.getlistGC();
+            txtTongTienCacCa.setText(gc.getTienTrongCa() + "");
+            return;
+        }
         try {
             int Select = JOptionPane.showConfirmDialog(null, "Bạn có chắc là muốn chốt ca không", "Chốt ca", JOptionPane.YES_NO_CANCEL_OPTION);
             if (JOptionPane.YES_OPTION == Select) {
@@ -377,6 +391,7 @@ public class FormGiaoCa extends javax.swing.JPanel {
 
     private void btnBanGiaoCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBanGiaoCaActionPerformed
         LocalDateTime localDate = LocalDateTime.now();
+
         try {
             if (kiemTraDieuKien()) {
 //                GiaoCa gc = new GiaoCa();
@@ -392,11 +407,6 @@ public class FormGiaoCa extends javax.swing.JPanel {
 //                    JOptionPane.showMessageDialog(null, "Giao ca không thành công");
 //                }
 
-            }
-            if (Global.getTienBanGiaoCa() > 0) {
-                Global.setTienBanGiaoCa(Double.parseDouble(txtTongDoanhThu.getText()) + Global.getTienBanGiaoCa());
-            } else {
-                Global.setTienBanGiaoCa(Double.parseDouble(txtTongDoanhThu.getText()));
             }
         } catch (Exception e) {
             e.printStackTrace();

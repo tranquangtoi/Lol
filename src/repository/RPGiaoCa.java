@@ -113,4 +113,21 @@ public class RPGiaoCa {
         return false;
     }
 
+    public GiaoCa getListGC() {
+        ArrayList<GiaoCa> list = new ArrayList<>();
+        sql = "SELECT Sum(NghiemThu) NT FROM GiaoCa where NgayTruc = GETDATE()";
+        try {
+            pre = con.prepareStatement(sql);
+            ResultSet re = pre.executeQuery();
+            while (re.next()) {
+                GiaoCa gc = new GiaoCa();
+                gc.setTienTrongCa(re.getDouble("NT"));
+                return gc;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

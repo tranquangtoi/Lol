@@ -20,6 +20,11 @@ public class ServiceGiaoCa {
 
     RPGiaoCa repo = new RPGiaoCa();
 
+    public GiaoCa getlistGC() {
+        GiaoCa list = repo.getListGC();
+        return list;
+    }
+
     public GiaoCaCT getTT(LocalDateTime gv, LocalDateTime gr) {
         GiaoCaCT list = repo.getGiaoCaTT(gv, gr);
         return list;
