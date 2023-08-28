@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
  * @author sethk
  */
 public class FormDangNhap extends javax.swing.JFrame {
-
+    
     ServiceTaiKhoan qltk = new ServiceTaiKhoan();
 
     /**
@@ -156,9 +156,10 @@ public class FormDangNhap extends javax.swing.JFrame {
         String user = txtUser.getText();
         String pass = String.valueOf(txtPass.getPassword());
         Global gl = new Global();
-
+        
         gl.setUser(user);
-     
+        LocalDateTime time = LocalDateTime.now();
+        gl.setGioVao(time);
         
         if (qltk.DangNhap(user, pass).equals("NV")) {
             this.dispose();
@@ -169,7 +170,7 @@ public class FormDangNhap extends javax.swing.JFrame {
         } else if (qltk.DangNhap(user, pass).equals("Fail")) {
             JOptionPane.showMessageDialog(this, "Tên đăng nhập hoặc mật khẩu không chính xác");
         }
-
+        
 
     }//GEN-LAST:event_buttonDN1ActionPerformed
 

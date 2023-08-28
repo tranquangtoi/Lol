@@ -5,12 +5,16 @@
 package view;
 
 import com.formdev.flatlaf.IntelliJTheme;
+import domainModel.GiaoCa;
+import domainModel.GiaoCaCT;
 import global.Global;
 import java.awt.Color;
+import java.time.LocalDateTime;
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
 import service.ServiceTaiKhoan;
 import swing.event.EventMenuSelected;
+import service.ServiceGiaoCa;
 
 /**
  *
@@ -25,6 +29,7 @@ public class FormNhanVien extends javax.swing.JFrame {
     FormGiaoCa formGc;
     FormService formSv;
     ServiceTaiKhoan qltk = new ServiceTaiKhoan();
+    ServiceGiaoCa qlGC = new ServiceGiaoCa();
 
     /**
      * Creates new form FormQuanLy
@@ -43,8 +48,6 @@ public class FormNhanVien extends javax.swing.JFrame {
         formSv = new FormService();
         formGc = new FormGiaoCa();
         menu.initMoving(FormNhanVien.this);
-
-        new FormDemThoiGianLam().setVisible(true);
 
         menu.addEventMenuSelected(new EventMenuSelected() {
             public void selected(int index) {
@@ -94,7 +97,19 @@ public class FormNhanVien extends javax.swing.JFrame {
         try {
             int choose = JOptionPane.showConfirmDialog(null, "Bạn có chắc là muốn đăng xuất", "Đóng ca", JOptionPane.YES_NO_CANCEL_OPTION);
             if (JOptionPane.YES_OPTION == choose) {
-                Global.setKeyChucNang(true);
+//                Global.setKeyChucNang(true);
+                LocalDateTime timeNow = LocalDateTime.now();
+                GiaoCaCT giaoCa = qlGC.getTT(Global.getGioVao(), timeNow);
+                GiaoCaCT giaoCa2 = qlGC.getTC(Global.getGioVao(), timeNow);
+                Double tongTien = giaoCa.getTongTien() + giaoCa2.getTienCoc();
+                tongTien = 0.0;
+                if (tongTien > 0) {
+                    GiaoCa gc = new GiaoCa();
+                    gc.setNguoiGiao(Global.getUser());
+                    gc.setTienTrongCa(tongTien);
+                    qlGC.insertGiaoCa(gc, Global.getGioVao(), timeNow);
+                    JOptionPane.showMessageDialog(null, "Đã lưu tiến trình làm việc của bạn");
+                }
                 this.dispose();
                 new FormDangNhap().setVisible(true);
             }

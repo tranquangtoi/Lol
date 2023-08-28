@@ -91,7 +91,7 @@ public class RPGiaoCa {
         return null;
     }
 
-    public void insertGiaoCa(GiaoCa gc, LocalDateTime gv, LocalDateTime gr) {
+    public boolean insertGiaoCa(GiaoCa gc, LocalDateTime gv, LocalDateTime gr) {
         try {
             sql = "INSERT INTO GiaoCa(tenNVV,tenNVR,GioVao,GioRa,NghiemThu,NgayTruc)\n"
                     + "VALUES(?,?,?,?,?,GETDATE())";
@@ -105,12 +105,12 @@ public class RPGiaoCa {
             pre.setObject(5, gc.getTienTrongCa());
             int i = pre.executeUpdate();
             if (i > 0) {
-                JOptionPane.showMessageDialog(null, "Bàn giao thành công");
-            } else {
-                JOptionPane.showMessageDialog(null, "Bàn giao không thành công");
+                return true;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
+
 }

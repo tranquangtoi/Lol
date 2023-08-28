@@ -12,6 +12,7 @@ import java.awt.Color;
 import global.Global;
 import global.Uhelper;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -39,6 +40,8 @@ public class FormGiaoCa extends javax.swing.JPanel {
         txtTongTien.setEnabled(false);
         txtTongDoanhThu.setEnabled(false);
 
+        txtTongTienCacCa.setText(Global.getTienBanGiaoCa() + "");
+
     }
 
     public void showChotCa() {
@@ -54,6 +57,18 @@ public class FormGiaoCa extends javax.swing.JPanel {
     }
 
     public boolean kiemTraDieuKien() {
+
+//        LocalTime startTime = LocalTime.of(16, 10);
+//        LocalTime endTime = LocalTime.of(22, 30);
+//
+//        LocalDateTime currentDateTime = LocalDateTime.now();
+//        LocalTime currentTime = currentDateTime.toLocalTime();
+//
+//        if (currentTime.isAfter(startTime) || currentTime.isBefore(endTime)) {
+//            System.out.println("Thời gian hiện tại nằm trong khoảng thời gian đã đặt.");
+//        } else {
+//            System.out.println("Thời gian hiện tại không nằm trong khoảng thời gian đã đặt.");
+//        }
 
         if (Uhelper.checkEmpty(txtNguoiGiao, "Không được để trống người giao")) {
             return false;
@@ -146,6 +161,8 @@ public class FormGiaoCa extends javax.swing.JPanel {
         jLabel15 = new javax.swing.JLabel();
         txtNguoiNhan = new swing.controls.TextField();
         btnBanGiaoCa = new swing.controls.Button();
+        jLabel16 = new javax.swing.JLabel();
+        txtTongTienCacCa = new swing.controls.TextField();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new java.awt.GridLayout(1, 0));
@@ -284,6 +301,12 @@ public class FormGiaoCa extends javax.swing.JPanel {
             }
         });
 
+        jLabel16.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setText("Tổng tiền các ca");
+
+        txtTongTienCacCa.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+
         javax.swing.GroupLayout panelSeth2Layout = new javax.swing.GroupLayout(panelSeth2);
         panelSeth2.setLayout(panelSeth2Layout);
         panelSeth2Layout.setHorizontalGroup(
@@ -293,22 +316,22 @@ public class FormGiaoCa extends javax.swing.JPanel {
                 .addComponent(jLabel8)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelSeth2Layout.createSequentialGroup()
-                .addContainerGap(82, Short.MAX_VALUE)
-                .addGroup(panelSeth2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(btnBanGiaoCa, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(panelSeth2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(panelSeth2Layout.createSequentialGroup()
-                            .addComponent(jLabel13)
-                            .addGap(52, 52, 52)
-                            .addComponent(txtThucTeGiao, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(panelSeth2Layout.createSequentialGroup()
-                            .addGroup(panelSeth2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel14)
-                                .addComponent(jLabel15))
-                            .addGap(61, 61, 61)
-                            .addGroup(panelSeth2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(txtNguoiGiao, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtNguoiNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(60, Short.MAX_VALUE)
+                .addGroup(panelSeth2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelSeth2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(txtNguoiGiao, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtNguoiNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtThucTeGiao, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelSeth2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel13)
+                        .addComponent(jLabel14)
+                        .addComponent(jLabel15)
+                        .addGroup(panelSeth2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(panelSeth2Layout.createSequentialGroup()
+                                .addComponent(jLabel16)
+                                .addGap(52, 52, 52)
+                                .addComponent(txtTongTienCacCa, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnBanGiaoCa, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(67, 67, 67))
         );
         panelSeth2Layout.setVerticalGroup(
@@ -316,18 +339,24 @@ public class FormGiaoCa extends javax.swing.JPanel {
             .addGroup(panelSeth2Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(90, 90, 90)
+                .addGap(47, 47, 47)
+                .addGroup(panelSeth2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTongTienCacCa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(32, 32, 32)
                 .addGroup(panelSeth2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtThucTeGiao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(34, 34, 34)
-                .addGroup(panelSeth2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNguoiGiao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(32, 32, 32)
-                .addGroup(panelSeth2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNguoiNhan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
+                .addGroup(panelSeth2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelSeth2Layout.createSequentialGroup()
+                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelSeth2Layout.createSequentialGroup()
+                        .addComponent(txtNguoiGiao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(20, 20, 20)
+                        .addComponent(txtNguoiNhan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(31, 31, 31)
                 .addComponent(btnBanGiaoCa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(171, Short.MAX_VALUE))
@@ -348,7 +377,6 @@ public class FormGiaoCa extends javax.swing.JPanel {
 
     private void btnBanGiaoCaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBanGiaoCaActionPerformed
         LocalDateTime localDate = LocalDateTime.now();
-
         try {
             if (kiemTraDieuKien()) {
 //                GiaoCa gc = new GiaoCa();
@@ -357,7 +385,18 @@ public class FormGiaoCa extends javax.swing.JPanel {
 //                gc.setTienTrongCa(Double.parseDouble(txtTongDoanhThu.getText()));
 //                gc.setGioRa(localDate);
 //                gc.setGioiVao(Global.getGioVao());
-//                service.insertGiaoCa(gc, date2, localDate);
+//                boolean bl = service.insertGiaoCa(gc, date2, localDate);
+//                if (bl) {
+//                    JOptionPane.showMessageDialog(null, "Giao ca thành công");
+//                } else {
+//                    JOptionPane.showMessageDialog(null, "Giao ca không thành công");
+//                }
+
+            }
+            if (Global.getTienBanGiaoCa() > 0) {
+                Global.setTienBanGiaoCa(Double.parseDouble(txtTongDoanhThu.getText()) + Global.getTienBanGiaoCa());
+            } else {
+                Global.setTienBanGiaoCa(Double.parseDouble(txtTongDoanhThu.getText()));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -384,6 +423,7 @@ public class FormGiaoCa extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
@@ -396,5 +436,6 @@ public class FormGiaoCa extends javax.swing.JPanel {
     private swing.controls.TextField txtTienCoc;
     private swing.controls.TextField txtTongDoanhThu;
     private swing.controls.TextField txtTongTien;
+    private swing.controls.TextField txtTongTienCacCa;
     // End of variables declaration//GEN-END:variables
 }

@@ -35,8 +35,9 @@ public class ServiceGiaoCa {
         return list;
     }
 
-    public void insertGiaoCa(GiaoCa gc, LocalDateTime gv, LocalDateTime gr) {
-        repo.insertGiaoCa(gc, gv, gr);
+    public boolean insertGiaoCa(GiaoCa gc, LocalDateTime gv, LocalDateTime gr) {
+        boolean bl = repo.insertGiaoCa(gc, gv, gr);
+        return bl;
     }
 
 }
